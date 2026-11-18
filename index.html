@@ -1,682 +1,427 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LMS Sekolah Digital - Portal Pembelajaran Terpadu</title>
+  <title>LMS Sekolah Digital — Portal Pembelajaran & Evaluasi Terpadu</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- Google Fonts: Plus Jakarta Sans -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Lucide Icons CDN -->
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #f8fafc;
     }
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
+    .hero-pattern {
+      background-color: #0f172a;
+      background-image: radial-gradient(circle at 20% 25%, rgba(37, 99, 235, 0.25) 0%, transparent 45%),
+                        radial-gradient(circle at 80% 75%, rgba(14, 165, 233, 0.2) 0%, transparent 45%);
     }
     .fade-in {
-      animation: fadeIn 0.25s ease-in-out;
+      animation: fadeIn 0.25s ease-out;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
-<body class="text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
 
   <!-- ==========================================
-       1. HALAMAN LOGIN (PORTAL MASUK)
+       1. NAVBAR (NAVIGASI UTAMA RESPONSIF)
        ========================================== -->
-  <div id="login-screen" class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900">
-    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden fade-in">
-      <!-- Header Login -->
-      <div class="bg-blue-600 p-6 text-white text-center relative overflow-hidden">
-        <div class="w-14 h-14 bg-white/15 backdrop-blur-sm rounded-xl flex items-center justify-center mx-auto mb-3 border border-white/20">
-          <i data-lucide="graduation-cap" class="w-8 h-8 text-white"></i>
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Logo & Nama Sekolah -->
+      <a href="#" class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-600/20">
+          <i data-lucide="graduation-cap" class="w-5 h-5"></i>
         </div>
-        <h1 class="text-xl font-bold tracking-tight">LMS SEKOLAH DIGITAL</h1>
-        <p class="text-blue-100 text-xs mt-1">Sistem Manajemen Pembelajaran & Evaluasi Terpadu</p>
-      </div>
-
-      <!-- Form Login -->
-      <form id="login-form" class="p-6 space-y-4">
         <div>
-          <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Masuk Sebagai (Simulasi Role)</label>
-          <div class="grid grid-cols-3 gap-2">
-            <button type="button" onclick="selectRole('siswa')" id="btn-role-siswa" class="role-btn py-2 px-3 rounded-lg border-2 border-blue-600 bg-blue-50 text-blue-700 font-semibold text-xs flex flex-col items-center gap-1 transition">
-              <i data-lucide="user" class="w-4 h-4"></i> Siswa
-            </button>
-            <button type="button" onclick="selectRole('guru')" id="btn-role-guru" class="role-btn py-2 px-3 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 font-semibold text-xs flex flex-col items-center gap-1 transition">
-              <i data-lucide="book-open-check" class="w-4 h-4"></i> Guru
-            </button>
-            <button type="button" onclick="selectRole('admin')" id="btn-role-admin" class="role-btn py-2 px-3 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 font-semibold text-xs flex flex-col items-center gap-1 transition">
-              <i data-lucide="shield-check" class="w-4 h-4"></i> Admin
-            </button>
-          </div>
+          <span class="font-extrabold text-slate-900 text-base tracking-tight block leading-none">LMS SEKOLAH</span>
+          <span class="text-[11px] font-medium text-slate-500">Digital Learning Portal</span>
         </div>
+      </a>
 
-        <div>
-          <label for="username" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">NIS / NIP / Username</label>
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
-              <i data-lucide="id-card" class="w-4 h-4"></i>
-            </span>
-            <input type="text" id="username" value="20261001" required
-              class="w-full pl-10 pr-4 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-              placeholder="Masukkan NIS, NIP, atau Username" />
-          </div>
-        </div>
-
-        <div>
-          <label for="password" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Kata Sandi</label>
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
-              <i data-lucide="lock" class="w-4 h-4"></i>
-            </span>
-            <input type="password" id="password" value="••••••••" required
-              class="w-full pl-10 pr-4 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-              placeholder="Masukkan kata sandi" />
-          </div>
-        </div>
-
-        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow-md shadow-blue-600/20 transition flex items-center justify-center gap-2">
-          <span>Masuk ke Portal</span>
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        </button>
-
-        <p class="text-center text-xs text-slate-400 pt-2">
-          Siap dihubungkan dengan Google Apps Script API
-        </p>
-      </form>
-    </div>
-  </div>
-
-  <!-- ==========================================
-       2. APLIKASI UTAMA (DASHBOARD LMS)
-       ========================================== -->
-  <div id="app-shell" class="hidden min-h-screen flex flex-col lg:flex-row">
-    
-    <!-- Mobile Sidebar Overlay -->
-    <div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/50 z-30 hidden lg:hidden backdrop-blur-xs"></div>
-
-    <!-- SIDEBAR NAVIGASI -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-slate-900 text-slate-300 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-0 transition-transform duration-200 ease-in-out flex flex-col">
-      <!-- Brand -->
-      <div class="h-16 flex items-center justify-between px-5 border-b border-slate-800">
-        <div class="flex items-center gap-2.5 text-white font-bold text-base">
-          <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-            <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-          </div>
-          <span>LMS Sekolah</span>
-        </div>
-        <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <!-- Info Role Aktif -->
-      <div class="p-4 border-b border-slate-800/80">
-        <div class="bg-slate-800/70 rounded-xl p-3 flex items-center gap-3">
-          <div id="sidebar-avatar" class="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm shrink-0">
-            SW
-          </div>
-          <div class="overflow-hidden">
-            <p id="sidebar-name" class="text-sm font-semibold text-white truncate">Ahmad Fauzan</p>
-            <span id="sidebar-role-badge" class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 mt-0.5">
-              Siswa • XII IPA 1
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Menu Navigasi Dinamis (Diisi via JS sesuai Role) -->
-      <nav id="sidebar-nav" class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-        <!-- Menu items rendered by JS -->
+      <!-- Menu Desktop -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
+        <a href="#beranda" class="text-blue-600">Beranda</a>
+        <a href="#fitur" class="hover:text-blue-600 transition">Fitur Utama</a>
+        <a href="#alur" class="hover:text-blue-600 transition">Alur Belajar</a>
+        <a href="#pengumuman" class="hover:text-blue-600 transition">Pengumuman</a>
       </nav>
 
-      <!-- Footer Sidebar -->
-      <div class="p-4 border-t border-slate-800">
-        <button onclick="logout()" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-rose-400 hover:bg-rose-500/10 rounded-xl transition">
-          <i data-lucide="log-out" class="w-4 h-4"></i>
-          <span>Keluar Aplikasi</span>
+      <!-- Tombol Aksi & Hamburger Mobile -->
+      <div class="flex items-center gap-2.5">
+        <button onclick="openLoginModal()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-sm shadow-blue-600/20 transition flex items-center gap-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Masuk Portal</span>
+        </button>
+        <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
+          <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
       </div>
-    </aside>
-
-    <!-- KONTEN UTAMA -->
-    <div class="flex-1 flex flex-col min-w-0">
-      
-      <!-- TOP NAVBAR -->
-      <header class="h-16 bg-white border-b border-slate-200 px-4 lg:px-8 flex items-center justify-between sticky top-0 z-20">
-        <div class="flex items-center gap-3">
-          <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
-            <i data-lucide="menu" class="w-5 h-5"></i>
-          </button>
-          <div>
-            <h2 id="page-title" class="text-base lg:text-lg font-bold text-slate-800">Beranda</h2>
-            <p id="page-subtitle" class="text-xs text-slate-500 hidden sm:block">Ringkasan aktivitas akademik dan pembelajaran hari ini</p>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <!-- Switch Role Cepat (Untuk Demo) -->
-          <div class="hidden md:flex items-center bg-slate-100 p-1 rounded-lg text-xs">
-            <span class="px-2 text-slate-500 font-medium">Mode Demo:</span>
-            <button onclick="switchDemoRole('siswa')" class="px-2.5 py-1 rounded-md font-semibold transition demo-pill" data-role="siswa">Siswa</button>
-            <button onclick="switchDemoRole('guru')" class="px-2.5 py-1 rounded-md font-semibold transition demo-pill" data-role="guru">Guru</button>
-            <button onclick="switchDemoRole('admin')" class="px-2.5 py-1 rounded-md font-semibold transition demo-pill" data-role="admin">Admin</button>
-          </div>
-
-          <button class="p-2 text-slate-500 hover:bg-slate-100 rounded-full relative">
-            <i data-lucide="bell" class="w-5 h-5"></i>
-            <span class="w-2 h-2 bg-rose-500 rounded-full absolute top-2 right-2"></span>
-          </button>
-        </div>
-      </header>
-
-      <!-- AREA KONTEN DINAMIS -->
-      <main id="main-content" class="flex-1 p-4 lg:p-8 max-w-7xl w-full mx-auto fade-in">
-        <!-- Konten halaman dirender di sini -->
-      </main>
-
     </div>
-  </div>
+
+    <!-- Menu Dropdown Mobile -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-2 text-sm font-semibold text-slate-700">
+      <a href="#beranda" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg bg-blue-50 text-blue-600">Beranda</a>
+      <a href="#fitur" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-slate-50">Fitur Utama</a>
+      <a href="#alur" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-slate-50">Alur Belajar</a>
+      <a href="#pengumuman" onclick="toggleMobileMenu()" class="block py-2 px-3 rounded-lg hover:bg-slate-50">Pengumuman</a>
+    </div>
+  </header>
 
   <!-- ==========================================
-       3. MODAL TAMBAH MATERI / SOAL (UNTUK GURU/ADMIN)
+       2. HERO SECTION (BANNER UTAMA)
        ========================================== -->
-  <div id="modal-form" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl fade-in">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
-        <h3 id="modal-title" class="font-bold text-slate-800">Tambah Materi Baru</h3>
-        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600">
+  <section id="beranda" class="hero-pattern text-white py-16 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Kolom Kiri: Teks & CTA -->
+      <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 text-xs font-semibold">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Tahun Ajaran 2026/2027 • Semester Ganjil Aktif
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+          Belajar Lebih Terstruktur, Evaluasi Lebih Cepat & Transparan.
+        </h1>
+
+        <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+          Platform pembelajaran digital terpadu untuk Siswa, Guru, dan Administrator Sekolah. Akses modul materi, kerjakan ujian berbasis komputer (CBT), dan pantau rekap nilai dalam satu portal.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-2">
+          <button onclick="openLoginModal('siswa')" class="w-full sm:w-auto px-6 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2">
+            <i data-lucide="user" class="w-4 h-4"></i>
+            <span>Login Siswa (NIS)</span>
+          </button>
+          <button onclick="openLoginModal('guru')" class="w-full sm:w-auto px-6 py-3.5 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-semibold text-sm rounded-xl transition flex items-center justify-center gap-2">
+            <i data-lucide="book-open-check" class="w-4 h-4 text-blue-400"></i>
+            <span>Login Guru & Staf</span>
+          </button>
+        </div>
+
+        <!-- Mini Info Keunggulan -->
+        <div class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-slate-400 font-medium">
+          <span class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Akses Multi-Perangkat</span>
+          <span class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Koreksi Nilai Otomatis</span>
+          <span class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Terintegrasi Cloud</span>
+        </div>
+      </div>
+
+      <!-- Kolom Kanan: Kartu Pratinjau Antarmuka -->
+      <div class="lg:col-span-5">
+        <div class="bg-slate-800/80 backdrop-blur-md border border-slate-700/80 rounded-2xl p-5 shadow-2xl">
+          <div class="flex items-center justify-between pb-4 border-b border-slate-700/80">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+            </div>
+            <span class="text-xs font-mono text-slate-400">portal.lms-sekolah.sch.id</span>
+          </div>
+
+          <div class="mt-4 space-y-3">
+            <!-- Kartu Ringkas Simulasi -->
+            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-700/60 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center">
+                  <i data-lucide="file-text" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-400">Materi Terbaru • XII IPA 1</p>
+                  <p class="text-sm font-bold text-white">Algoritma & Struktur Data</p>
+                </div>
+              </div>
+              <span class="text-[11px] px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 font-semibold">Aktif</span>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-700/60 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center">
+                  <i data-lucide="clock" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-400">Ujian CBT • Ekonomi</p>
+                  <p class="text-sm font-bold text-white">Evaluasi Kebijakan Moneter</p>
+                </div>
+              </div>
+              <span class="text-[11px] px-2.5 py-1 rounded-md bg-blue-500/20 text-blue-300 font-semibold">45 Menit</span>
+            </div>
+
+            <!-- Bar Statistik Mini -->
+            <div class="grid grid-cols-3 gap-2 pt-2">
+              <div class="p-3 rounded-xl bg-slate-900/70 text-center border border-slate-700/50">
+                <p class="text-lg font-extrabold text-white">36</p>
+                <p class="text-[11px] text-slate-400">Rombel Kelas</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900/70 text-center border border-slate-700/50">
+                <p class="text-lg font-extrabold text-blue-400">1.120+</p>
+                <p class="text-[11px] text-slate-400">Siswa Aktif</p>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-900/70 text-center border border-slate-700/50">
+                <p class="text-lg font-extrabold text-emerald-400">68</p>
+                <p class="text-[11px] text-slate-400">Tenaga Pendidik</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================
+       3. FITUR UTAMA BERDASARKAN PERAN (ROLE)
+       ========================================== -->
+  <section id="fitur" class="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Ekosistem Terintegrasi</span>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Dirancang Khusus untuk Kebutuhan Sekolah</h2>
+      <p class="text-sm text-slate-500 mt-2">Setiap pengguna mendapatkan ruang kerja sesuai kewenangannya masing-masing.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Card Siswa -->
+      <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition">
+        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+          <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">Portal Siswa</h3>
+        <p class="text-sm text-slate-500 leading-relaxed mb-4">
+          Akses bahan ajar sesuai kelas dan jurusan, kerjakan evaluasi daring dengan penghitung waktu otomatis, serta lihat hasil nilai secara langsung.
+        </p>
+        <ul class="space-y-2 text-xs font-medium text-slate-600">
+          <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-600"></i> Login cepat menggunakan NIS</li>
+          <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-600"></i> Modul PDF, Video & Ringkasan</li>
+          <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-blue-600"></i> Riwayat nilai ujian tersimpan rapi</li>
+        </ul>
+      </div>
+
+      <!-- Card Guru -->
+      <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+          <i data-lucide="book-open-check" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">Ruang Kerja Guru</h3>
+        <p class="text-sm text-slate-500 leading-relaxed mb-4">
+          Distribusikan materi pembelajaran ke kelas tertentu, susun bank soal pilihan ganda maupun uraian, dan ekspor rekapitulasi nilai siswa.
+        </p>
+        <ul class="space-y-2 text-xs font-medium text-slate-600">
+          <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Unggah materi & tautan media</li>
+          <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Pembuatan paket ujian & kuis</li>
+          <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-emerald-600"></i> Rekap nilai otomatis per kelas</li>
+        </ul>
+      </div>
+
+      <!-- Card Admin -->
+      <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md transition">
+        <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4">
+          <i data-lucide="shield-check" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">Panel Administrator</h3>
+        <p class="text-sm text-slate-500 leading-relaxed mb-4">
+          Kelola master data kelas, jurusan, akun guru, dan siswa secara massal melalui unggah CSV atau salin-tempel spreadsheet.
+        </p>
+        <ul class="space-y-2 text-xs font-medium text-slate-600">
+          <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-600"></i> Impor data pengguna massal (Bulk)</li>
+          <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-600"></i> Pengaturan master kelas & jurusan</li>
+          <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-purple-600"></i> Sinkronisasi database terpusat</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       4. ALUR PENGGUNAAN & PENGUMUMAN
+       ========================================== -->
+  <section id="alur" class="bg-white border-y border-slate-200/80 py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
+      
+      <!-- Langkah Penggunaan (7 Kolom) -->
+      <div class="lg:col-span-7">
+        <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Panduan Singkat</span>
+        <h2 class="text-2xl font-extrabold text-slate-900 mt-1 mb-6">Mulai Belajar dalam 3 Langkah Mudah</h2>
+
+        <div class="space-y-4">
+          <div class="flex gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/70">
+            <div class="w-9 h-9 rounded-xl bg-blue-600 text-white font-bold flex items-center justify-center shrink-0 text-sm">1</div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm">Masuk dengan Akun Sekolah</h4>
+              <p class="text-xs text-slate-500 mt-1 leading-relaxed">Gunakan NIS (untuk Siswa) atau NIP/Username (untuk Guru) yang telah didaftarkan oleh operator sekolah.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/70">
+            <div class="w-9 h-9 rounded-xl bg-blue-600 text-white font-bold flex items-center justify-center shrink-0 text-sm">2</div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm">Pilih Mata Pelajaran & Materi</h4>
+              <p class="text-xs text-slate-500 mt-1 leading-relaxed">Sistem secara otomatis menampilkan daftar materi dan tugas yang sesuai dengan rombongan belajar Anda.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200/70">
+            <div class="w-9 h-9 rounded-xl bg-blue-600 text-white font-bold flex items-center justify-center shrink-0 text-sm">3</div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm">Kerjakan Evaluasi & Cek Nilai</h4>
+              <p class="text-xs text-slate-500 mt-1 leading-relaxed">Selesaikan kuis atau ujian tepat waktu dan pantau perkembangan skor akademik Anda di menu Rekap Nilai.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Papan Pengumuman Sekolah (5 Kolom) -->
+      <div id="pengumuman" class="lg:col-span-5">
+        <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-lg h-full flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+                <i data-lucide="megaphone" class="w-4 h-4"></i> Info Akademik
+              </span>
+              <span class="text-[11px] text-slate-400">Terbaru</span>
+            </div>
+
+            <div class="space-y-4 divide-y divide-slate-800">
+              <div class="pt-1">
+                <span class="text-[11px] text-emerald-400 font-semibold">18 November 2026</span>
+                <h4 class="font-bold text-sm mt-0.5">Persiapan Penilaian Akhir Semester (PAS) Ganjil</h4>
+                <p class="text-xs text-slate-400 mt-1 leading-relaxed">Seluruh siswa diharapkan memastikan akun NIS dapat digunakan untuk login sebelum jadwal simulasi CBT dimulai.</p>
+              </div>
+
+              <div class="pt-4">
+                <span class="text-[11px] text-blue-400 font-semibold">15 November 2026</span>
+                <h4 class="font-bold text-sm mt-0.5">Pembaruan Modul Mata Pelajaran Informatika & Ekonomi</h4>
+                <p class="text-xs text-slate-400 mt-1 leading-relaxed">Materi baru telah diunggah oleh guru pengampu. Silakan unduh dan pelajari sebelum pertemuan berikutnya.</p>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="openLoginModal()" class="mt-6 w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition">
+            Masuk untuk Melihat Detail →
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================
+       5. FOOTER
+       ========================================== -->
+  <footer class="bg-slate-950 text-slate-400 py-10 px-4 sm:px-6 lg:px-8 text-xs">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-white font-bold text-sm">
+        <i data-lucide="graduation-cap" class="w-5 h-5 text-blue-500"></i>
+        <span>LMS SEKOLAH DIGITAL</span>
+      </div>
+      <p class="text-center sm:text-right">
+        &copy; 2026 Portal Pembelajaran Terpadu. Didukung oleh Infrastruktur Cloud & Google Apps Script.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       6. MODAL LOGIN (POPUP MASUK PORTAL)
+       ========================================== -->
+  <div id="login-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/70 backdrop-blur-xs">
+    <div class="bg-white rounded-2xl max-w-md w-full overflow-hidden shadow-2xl fade-in">
+      <div class="bg-blue-600 p-5 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="lock" class="w-5 h-5"></i>
+          <h3 class="font-bold text-base">Masuk ke Portal LMS</h3>
+        </div>
+        <button onclick="closeLoginModal()" class="text-blue-100 hover:text-white">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
-      <form onsubmit="handleSaveModal(event)" class="mt-4 space-y-4">
+
+      <form onsubmit="handleLoginSubmit(event)" class="p-6 space-y-4">
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Judul Materi / Topik</label>
-          <input type="text" required placeholder="Contoh: Pengantar Algoritma & Pemrograman" class="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
+          <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Pilih Peran Pengguna</label>
+          <select id="login-role" class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-slate-50 font-medium">
+            <option value="siswa">Siswa (Masuk dengan NIS)</option>
+            <option value="guru">Guru (Masuk dengan NIP / Username)</option>
+            <option value="admin">Administrator Sekolah</option>
+          </select>
         </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Kelas & Jurusan</label>
-            <select class="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
-              <option>XII IPA 1</option>
-              <option>XII IPA 2</option>
-              <option>XI IPS 1</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Mata Pelajaran</label>
-            <select class="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
-              <option>Informatika</option>
-              <option>Ekonomi</option>
-              <option>Matematika</option>
-            </select>
-          </div>
-        </div>
+
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Ringkasan / Tautan Dokumen (Drive/Video)</label>
-          <textarea rows="3" required placeholder="Tuliskan deskripsi singkat atau tempel tautan materi..." class="w-full px-3.5 py-2 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+          <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">NIS / NIP / Username</label>
+          <input type="text" id="login-username" required placeholder="Contoh: 20261001" class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
         </div>
-        <div class="flex justify-end gap-2 pt-2">
-          <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl">Batal</button>
-          <button type="submit" class="px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl">Simpan Data</button>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1">Kata Sandi</label>
+          <input type="password" id="login-password" required placeholder="Masukkan kata sandi" class="w-full px-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
         </div>
+
+        <button type="submit" id="btn-submit-login" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-md shadow-blue-600/20 transition flex items-center justify-center gap-2">
+          <span>Masuk Sekarang</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
       </form>
     </div>
   </div>
 
   <!-- ==========================================
-       JAVASCRIPT LOGIC & DATA MOCKUP
+       JAVASCRIPT INTERAKTIVITAS
        ========================================== -->
   <script>
-    // Konfigurasi URL Backend Google Apps Script (Ganti saat integrasi API)
-    const API_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
-
-    // State Aplikasi
-    let currentRole = 'siswa';
-    let currentTab = 'dashboard';
-
-    // Data Profil Simulasi per Role
-    const roleProfiles = {
-      siswa: {
-        name: "Ahmad Fauzan",
-        badge: "Siswa • XII IPA 1",
-        avatar: "AF",
-        idInput: "20261001",
-        menus: [
-          { id: 'dashboard', label: 'Beranda', icon: 'layout-dashboard' },
-          { id: 'materi', label: 'Materi Pelajaran', icon: 'book-open' },
-          { id: 'ujian', label: 'Tugas & Ujian CBT', icon: 'file-check-2' },
-          { id: 'nilai', label: 'Rekap Nilai', icon: 'award' }
-        ]
-      },
-      guru: {
-        name: "Budi Santoso, S.Pd.",
-        badge: "Guru • Informatika",
-        avatar: "BS",
-        idInput: "19880412201503",
-        menus: [
-          { id: 'dashboard', label: 'Dashboard Guru', icon: 'layout-dashboard' },
-          { id: 'materi', label: 'Kelola Materi', icon: 'folder-plus' },
-          { id: 'ujian', label: 'Bank Soal & Ujian', icon: 'clipboard-list' },
-          { id: 'nilai', label: 'Penilaian Siswa', icon: 'check-square' }
-        ]
-      },
-      admin: {
-        name: "Administrator Utama",
-        badge: "Admin Sekolah",
-        avatar: "AD",
-        idInput: "admin_sekolah",
-        menus: [
-          { id: 'dashboard', label: 'Ringkasan Sistem', icon: 'layout-dashboard' },
-          { id: 'users', label: 'Data Guru & Siswa', icon: 'users' },
-          { id: 'kelas', label: 'Master Kelas & Jurusan', icon: 'layers' },
-          { id: 'materi', label: 'Monitoring Materi', icon: 'database' }
-        ]
-      }
-    };
-
-    // Data Dummy Materi & Soal
-    const sampleMateri = [
-      { id: 1, mapel: "Informatika", judul: "Struktur Data & Algoritma Dasar", kelas: "XII IPA 1", guru: "Budi Santoso, S.Pd.", tanggal: "18 Nov 2026", tipe: "Modul PDF" },
-      { id: 2, mapel: "Ekonomi", judul: "Kebijakan Moneter & Fiskal", kelas: "XII IPS 1", guru: "Siti Aminah, M.Si.", tanggal: "17 Nov 2026", tipe: "Video & Slide" },
-      { id: 3, mapel: "Matematika", judul: "Integral Tentu dan Penerapannya", kelas: "XII IPA 1", guru: "Drs. Hendra Wijaya", tanggal: "15 Nov 2026", tipe: "Modul PDF" }
-    ];
-
-    const sampleSoal = [
-      { id: 101, judul: "Evaluasi Harian 1: Logika Algoritma", mapel: "Informatika", durasi: "45 Menit", jumlah: "20 Soal", status: "Tersedia" },
-      { id: 102, judul: "Kuis Pasar Modal & Inflasi", mapel: "Ekonomi", durasi: "30 Menit", jumlah: "15 Soal", status: "Selesai (Nilai: 92)" }
-    ];
-
-    // Inisialisasi Icon Lucide
+    // Inisialisasi ikon Lucide
     lucide.createIcons();
 
-    // Pilih Role di Halaman Login
-    function selectRole(role) {
-      currentRole = role;
-      document.getElementById('username').value = roleProfiles[role].idInput;
-      
-      document.querySelectorAll('.role-btn').forEach(btn => {
-        btn.className = "role-btn py-2 px-3 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 font-semibold text-xs flex flex-col items-center gap-1 transition";
-      });
-      const activeBtn = document.getElementById(`btn-role-${role}`);
-      activeBtn.className = "role-btn py-2 px-3 rounded-lg border-2 border-blue-600 bg-blue-50 text-blue-700 font-semibold text-xs flex flex-col items-center gap-1 transition";
+    // Endpoint Backend Google Apps Script Anda
+    const GAS_API_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
+
+    // Toggle Menu Mobile
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
     }
 
-    // Handle Submit Login
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      document.getElementById('login-screen').classList.add('hidden');
-      document.getElementById('app-shell').classList.remove('hidden');
-      initApp();
-    });
-
-    // Keluar Aplikasi
-    function logout() {
-      document.getElementById('app-shell').classList.add('hidden');
-      document.getElementById('login-screen').classList.remove('hidden');
-    }
-
-    // Toggle Sidebar Mobile
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const backdrop = document.getElementById('sidebar-backdrop');
-      sidebar.classList.toggle('-translate-x-full');
-      backdrop.classList.toggle('hidden');
-    }
-
-    // Ganti Role Cepat dari Topbar Demo
-    function switchDemoRole(role) {
-      currentRole = role;
-      currentTab = 'dashboard';
-      initApp();
-    }
-
-    // Inisialisasi Tampilan Dashboard sesuai Role
-    function initApp() {
-      const profile = roleProfiles[currentRole];
-      document.getElementById('sidebar-name').textContent = profile.name;
-      document.getElementById('sidebar-role-badge').textContent = profile.badge;
-      document.getElementById('sidebar-avatar').textContent = profile.avatar;
-
-      // Update Demo Pills
-      document.querySelectorAll('.demo-pill').forEach(pill => {
-        if (pill.dataset.role === currentRole) {
-          pill.className = "px-2.5 py-1 rounded-md font-semibold transition demo-pill bg-white text-blue-600 shadow-xs";
-        } else {
-          pill.className = "px-2.5 py-1 rounded-md font-semibold transition demo-pill text-slate-600 hover:text-slate-900";
-        }
-      });
-
-      renderSidebarMenu();
-      renderContent(currentTab);
-    }
-
-    // Render Menu Sidebar
-    function renderSidebarMenu() {
-      const nav = document.getElementById('sidebar-nav');
-      const menus = roleProfiles[currentRole].menus;
-      
-      nav.innerHTML = menus.map(m => {
-        const isActive = m.id === currentTab;
-        const activeClass = isActive 
-          ? "bg-blue-600 text-white shadow-md shadow-blue-600/20" 
-          : "text-slate-300 hover:bg-slate-800 hover:text-white";
-        return `
-          <button onclick="navigateTo('${m.id}')" class="w-full flex items-center gap-3 px-3.5 py-2.5 text-sm font-medium rounded-xl transition ${activeClass}">
-            <i data-lucide="${m.icon}" class="w-4 h-4"></i>
-            <span>${m.label}</span>
-          </button>
-        `;
-      }).join('');
-      lucide.createIcons();
-    }
-
-    function navigateTo(tabId) {
-      currentTab = tabId;
-      renderSidebarMenu();
-      renderContent(tabId);
-      // Tutup sidebar otomatis di mode mobile
-      if (window.innerWidth < 1024) {
-        const sidebar = document.getElementById('sidebar');
-        if (!sidebar.classList.contains('-translate-x-full')) {
-          toggleSidebar();
-        }
-      }
-    }
-
-    // Render Konten Utama Berdasarkan Tab & Role
-    function renderContent(tabId) {
-      const main = document.getElementById('main-content');
-      const titleEl = document.getElementById('page-title');
-      const subEl = document.getElementById('page-subtitle');
-
-      if (tabId === 'dashboard') {
-        titleEl.textContent = "Beranda Utama";
-        subEl.textContent = `Selamat datang kembali, ${roleProfiles[currentRole].name}`;
-        
-        main.innerHTML = `
-          <!-- Statistik Ringkas -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-4">
-              <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                <i data-lucide="book-open" class="w-6 h-6"></i>
-              </div>
-              <div>
-                <p class="text-xs font-medium text-slate-500">Total Materi Aktif</p>
-                <p class="text-2xl font-bold text-slate-800">24</p>
-              </div>
-            </div>
-            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-4">
-              <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                <i data-lucide="file-check-2" class="w-6 h-6"></i>
-              </div>
-              <div>
-                <p class="text-xs font-medium text-slate-500">Paket Soal / Ujian</p>
-                <p class="text-2xl font-bold text-slate-800">8</p>
-              </div>
-            </div>
-            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-4">
-              <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
-                <i data-lucide="users" class="w-6 h-6"></i>
-              </div>
-              <div>
-                <p class="text-xs font-medium text-slate-500">Kelas Terdaftar</p>
-                <p class="text-2xl font-bold text-slate-800">12 Kelas</p>
-              </div>
-            </div>
-            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center gap-4">
-              <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
-                <i data-lucide="trending-up" class="w-6 h-6"></i>
-              </div>
-              <div>
-                <p class="text-xs font-medium text-slate-500">Rata-rata Evaluasi</p>
-                <p class="text-2xl font-bold text-slate-800">86.5</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Grid Dua Kolom: Materi Terbaru & Jadwal Ujian -->
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
-              <div class="p-5 border-b border-slate-100 flex items-center justify-between">
-                <h3 class="font-bold text-slate-800 text-sm">Materi Pembelajaran Terbaru</h3>
-                <button onclick="navigateTo('materi')" class="text-xs font-semibold text-blue-600 hover:underline">Lihat Semua</button>
-              </div>
-              <div class="divide-y divide-slate-100">
-                ${sampleMateri.map(item => `
-                  <div class="p-4 sm:px-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-slate-50/70 transition">
-                    <div>
-                      <span class="inline-block text-[11px] font-semibold px-2.5 py-0.5 rounded-md bg-blue-50 text-blue-700 mb-1">${item.mapel} • ${item.kelas}</span>
-                      <h4 class="font-semibold text-slate-800 text-sm">${item.judul}</h4>
-                      <p class="text-xs text-slate-500 mt-0.5">Oleh ${item.guru} • ${item.tanggal}</p>
-                    </div>
-                    <button onclick="navigateTo('materi')" class="self-start sm:self-center px-3 py-1.5 text-xs font-semibold bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-700 rounded-lg transition shrink-0">
-                      Buka Materi
-                    </button>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-
-            <!-- Panel Informasi & Tugas -->
-            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 flex flex-col justify-between">
-              <div>
-                <h3 class="font-bold text-slate-800 text-sm mb-3">Agenda Evaluasi & CBT</h3>
-                <div class="space-y-3">
-                  ${sampleSoal.map(s => `
-                    <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50">
-                      <div class="flex justify-between items-start gap-2">
-                        <span class="text-xs font-bold text-blue-600">${s.mapel}</span>
-                        <span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium">${s.status}</span>
-                      </div>
-                      <p class="font-semibold text-slate-800 text-sm mt-1">${s.judul}</p>
-                      <p class="text-xs text-slate-500 mt-1 flex items-center gap-2">
-                        <span>⏱ ${s.durasi}</span> • <span>📝 ${s.jumlah}</span>
-                      </p>
-                    </div>
-                  `).join('')}
-                </div>
-              </div>
-              <button onclick="navigateTo('ujian')" class="mt-4 w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl transition">
-                Ke Halaman Ujian & Tugas
-              </button>
-            </div>
-          </div>
-        `;
-      } 
-      else if (tabId === 'materi') {
-        titleEl.textContent = currentRole === 'siswa' ? "Materi Pelajaran" : "Manajemen Materi Pembelajaran";
-        subEl.textContent = "Akses modul digital, presentasi, dan bahan ajar terstruktur";
-        
-        const canAdd = currentRole === 'guru' || currentRole === 'admin';
-        main.innerHTML = `
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-            <div class="relative max-w-xs w-full">
-              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
-                <i data-lucide="search" class="w-4 h-4"></i>
-              </span>
-              <input type="text" placeholder="Cari judul atau mapel..." class="w-full pl-9 pr-4 py-2 text-sm bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none">
-            </div>
-            ${canAdd ? `
-              <button onclick="openModal('Tambah Materi Baru')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl flex items-center justify-center gap-2 shadow-xs transition">
-                <i data-lucide="plus" class="w-4 h-4"></i> Tambah Materi
-              </button>
-            ` : ''}
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            ${sampleMateri.map(m => `
-              <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs hover:shadow-md transition flex flex-col justify-between">
-                <div>
-                  <div class="flex items-center justify-between gap-2 mb-3">
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700">${m.mapel}</span>
-                    <span class="text-xs text-slate-400 font-medium">${m.kelas}</span>
-                  </div>
-                  <h3 class="font-bold text-slate-800 text-base mb-1">${m.judul}</h3>
-                  <p class="text-xs text-slate-500 mb-4">Pengampu: ${m.guru}</p>
-                </div>
-                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <span class="text-xs font-medium text-slate-500 flex items-center gap-1">
-                    <i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-500"></i> ${m.tipe}
-                  </span>
-                  <button onclick="alert('Membuka pratinjau materi: ${m.judul}')" class="text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1">
-                    Pelajari <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-                  </button>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        `;
-      }
-      else if (tabId === 'ujian') {
-        titleEl.textContent = "Evaluasi & Ujian Berbasis Komputer (CBT)";
-        subEl.textContent = "Kerjakan kuis interaktif atau kelola paket soal evaluasi";
-        
-        main.innerHTML = `
-          <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs mb-6">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div>
-                <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Simulasi Lembar Kerja CBT</span>
-                <h3 class="text-lg font-bold text-slate-800 mt-1">Evaluasi Harian 1: Logika Algoritma</h3>
-                <p class="text-xs text-slate-500 mt-0.5">Pilih salah satu jawaban yang paling tepat di bawah ini.</p>
-              </div>
-              <div class="px-4 py-2 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-xs font-bold">
-                Sisa Waktu: 44:12
-              </div>
-            </div>
-
-            <div class="mt-6 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-              <p class="text-sm font-semibold text-slate-800 mb-3">
-                1. Struktur kontrol dalam pemrograman yang digunakan untuk mengulang blok kode selama kondisi tertentu bernilai benar disebut...
-              </p>
-              <div class="space-y-2 text-sm">
-                <label class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-500">
-                  <input type="radio" name="soal1" class="text-blue-600 focus:ring-blue-500">
-                  <span>A. Percabangan (Conditional / If-Else)</span>
-                </label>
-                <label class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-500">
-                  <input type="radio" name="soal1" class="text-blue-600 focus:ring-blue-500">
-                  <span>B. Perulangan (Looping / While-For)</span>
-                </label>
-                <label class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-blue-500">
-                  <input type="radio" name="soal1" class="text-blue-600 focus:ring-blue-500">
-                  <span>C. Deklarasi Variabel Konstanta</span>
-                </label>
-              </div>
-              <div class="mt-4 flex justify-end">
-                <button onclick="alert('Jawaban berhasil dikirim ke database!')" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl transition">
-                  Kirim Jawaban
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-      else {
-        // Tab Nilai / Users / Kelas (Tabel Responsif)
-        titleEl.textContent = "Data Akademik & Rekapitulasi";
-        subEl.textContent = "Tabel data terstruktur yang siap disinkronkan dengan Google Sheets";
-        
-        main.innerHTML = `
-          <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
-            <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <h3 class="font-bold text-slate-800 text-sm">Daftar Pengguna & Hasil Evaluasi</h3>
-              ${currentRole !== 'siswa' ? `
-                <button onclick="openModal('Tambah Data Baru')" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 self-start">
-                  <i data-lucide="plus" class="w-4 h-4"></i> Tambah Data
-                </button>
-              ` : ''}
-            </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                  <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-200">
-                    <th class="py-3.5 px-5 font-semibold">NIS / ID</th>
-                    <th class="py-3.5 px-5 font-semibold">Nama Lengkap</th>
-                    <th class="py-3.5 px-5 font-semibold">Kelas</th>
-                    <th class="py-3.5 px-5 font-semibold">Mata Pelajaran</th>
-                    <th class="py-3.5 px-5 font-semibold">Nilai</th>
-                    <th class="py-3.5 px-5 font-semibold">Status</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100 text-sm">
-                  <tr class="hover:bg-slate-50/70">
-                    <td class="py-3.5 px-5 font-mono text-xs text-slate-600">20261001</td>
-                    <td class="py-3.5 px-5 font-semibold text-slate-800">Ahmad Fauzan</td>
-                    <td class="py-3.5 px-5 text-slate-600">XII IPA 1</td>
-                    <td class="py-3.5 px-5 text-slate-600">Informatika</td>
-                    <td class="py-3.5 px-5 font-bold text-blue-600">92</td>
-                    <td class="py-3.5 px-5"><span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-700">Lulus</span></td>
-                  </tr>
-                  <tr class="hover:bg-slate-50/70">
-                    <td class="py-3.5 px-5 font-mono text-xs text-slate-600">20261002</td>
-                    <td class="py-3.5 px-5 font-semibold text-slate-800">Nabila Putri</td>
-                    <td class="py-3.5 px-5 text-slate-600">XII IPA 1</td>
-                    <td class="py-3.5 px-5 text-slate-600">Informatika</td>
-                    <td class="py-3.5 px-5 font-bold text-blue-600">88</td>
-                    <td class="py-3.5 px-5"><span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-700">Lulus</span></td>
-                  </tr>
-                  <tr class="hover:bg-slate-50/70">
-                    <td class="py-3.5 px-5 font-mono text-xs text-slate-600">20261003</td>
-                    <td class="py-3.5 px-5 font-semibold text-slate-800">Rizky Pratama</td>
-                    <td class="py-3.5 px-5 text-slate-600">XII IPS 1</td>
-                    <td class="py-3.5 px-5 text-slate-600">Ekonomi</td>
-                    <td class="py-3.5 px-5 font-bold text-blue-600">85</td>
-                    <td class="py-3.5 px-5"><span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-700">Lulus</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        `;
-      }
-
-      lucide.createIcons();
-    }
-
-    // Modal Functions
-    function openModal(title) {
-      document.getElementById('modal-title').textContent = title;
-      const modal = document.getElementById('modal-form');
+    // Buka Modal Login (Opsional langsung memilih role tertentu)
+    function openLoginModal(defaultRole = 'siswa') {
+      document.getElementById('login-role').value = defaultRole;
+      const modal = document.getElementById('login-modal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
     }
 
-    function closeModal() {
-      const modal = document.getElementById('modal-form');
+    // Tutup Modal Login
+    function closeLoginModal() {
+      const modal = document.getElementById('login-modal');
       modal.classList.add('hidden');
       modal.classList.remove('flex');
     }
 
-    function handleSaveModal(e) {
+    // Simulasi Proses Login (Siap dihubungkan ke fetch GAS)
+    function handleLoginSubmit(e) {
       e.preventDefault();
-      closeModal();
-      alert("Data berhasil disimpan (siap dihubungkan ke endpoint Google Apps Script).");
+      const role = document.getElementById('login-role').value;
+      const username = document.getElementById('login-username').value;
+      const btn = document.getElementById('btn-submit-login');
+
+      btn.innerHTML = `<span>Memverifikasi Akun...</span>`;
+      btn.disabled = true;
+
+      // Simulasi jeda autentikasi (Ganti bagian ini dengan fetch ke GAS_API_URL)
+      setTimeout(() => {
+        alert(`Autentikasi berhasil untuk ${username} (Role: ${role.toUpperCase()}).\nMengarahkan ke halaman Dashboard LMS...`);
+        btn.innerHTML = `<span>Masuk Sekarang</span>`;
+        btn.disabled = false;
+        closeLoginModal();
+        // window.location.href = "dashboard.html"; // Aktifkan jika file dashboard terpisah
+      }, 700);
     }
   </script>
 </body>
